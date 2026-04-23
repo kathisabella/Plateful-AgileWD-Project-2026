@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ page_title|default('Plateful My Recipes') }}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/>
+    </head>
+
+    <body class="page-my-recipes">
+
+        <div class="wrapper">
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="logo">
+                    <h1>Plateful</h1>
+                    <p>your recipe space</p>
+                </div>
+
+                <nav>
+                    <a href="{{ url_for('dashboard') }}">Home</a>
+                    <a href="{{ url_for('explore') }}">Explore</a>
+                    <a href="{{ url_for('my_recipes') }}" class="active">My Recipes</a>
+                    <a href="{{ url_for('saved_recipes') }}">Saved</a>
+                    <a href="{{ url_for('following') }}">Following</a>
+                    <a href="{{ url_for('meal_planner') }}">Meal Planner</a>
+                    <hr class="nav-divider" />
+                    <a href="{{ url_for('profile') }}">Profile</a>
+                    <a href="{{ url_for('settings') }}">Settings</a>
+                </nav>
+
+                <div class="sidebar-user">
+                    <div class="avatar">{{ initials|default('--') }}</div>
+                    <div>
+                    <p class="name">{{ display_name|default('Your Name') }}</p>
+                    <p class="handle">{{ username|default('@username') }}</p>
+                    </div>
+                </div>
+                </aside>
+
+                <!-- MAIN -->
+                <main class="main">
+
+                <header class="topbar">
+                    <div class="topbar-left">
+                    <span class="hi">My Recipes</span>
+                    <span class="date">{{ page_date|default('') }}</span>
+                    </div>
+
+                    <div class="topbar-right">
+                    <a href="{{ url_for('upload_recipe') }}" class="btn-upload">+ New Recipe</a>
+                    </div>
+                </header>
+
+                <div class="content">
+
+                    <div class="page-intro">
+                    <h2>Your recipes</h2>
+                    <p>Manage the recipes you’ve created and shared.</p>
+                    </div>
+
+                    <div class="toolbar">
+                    <div class="toolbar-left">
+                        <span>Sort by</span>
+                        <select class="sort-select">
+                        <option>Most recent</option>
+                        <option>Oldest</option>
+                        <option>Most saved</option>
+                        <option>Alphabetical</option>
+                        </select>
+                    </div>
+                    </div>
+
+                    <div class="recipe-grid">
+
+                    {% if recipes %}
+                        {% for recipe in recipes %}
+                        <div class="recipe-card">
+                            <div class="recipe-thumb"></div>
+
+                            <div class="recipe-body">
+                            <p class="recipe-name">{{ recipe.title }}</p>
+                            <p class="recipe-by">Created by you</p>
+
+                            <div class="recipe-meta">
+                                <span class="tag">{{ recipe.cuisine }}</span>
+                                <span>{{ recipe.difficulty }}</span>
+                                <span>{{ recipe.prep_time }}</span>
+                            </div>
+
+                            <div class="actions" style="margin-top: 12px;">
+                                <a href="{{ url_for('recipe_details', recipe_id=recipe.id) }}" class="btn">View</a>
+                                <a href="{{ url_for('edit_recipe', recipe_id=recipe.id) }}" class="btn">Edit</a>
+                            </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="empty-state">You haven’t uploaded any recipes yet.</p>
+                    {% endif %}
+
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
