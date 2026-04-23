@@ -358,9 +358,7 @@ thead th:first-child { width: 98px; background: #f6f3e5; }
    PAGE: EXPLORE
 ════════════════════════════════════════════ */
 
-body.page-explore .sidebar,
-body.page-explore .topbar { padding-left: 24px; padding-right: 24px; }
-body.page-explore .content { padding: 24px; overflow: auto; }
+body.page-explore .content { overflow: auto; }
 body.page-explore .recipe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
 body.page-explore .recipe-thumb { height: 100px; }
 body.page-explore .recipe-name { font-size: 0.9rem; }
@@ -716,3 +714,9 @@ body.page-profile .columns { display: grid; grid-template-columns: 1fr 260px; ga
 
 .tab-panel { display: none; }
 .tab-panel.active { display: block; }
+
+
+/* Blank template helpers */
+.empty-state { padding: 18px; border: 1px dashed #d8d0b0; border-radius: 12px; color: var(--color-muted); background: #fff; font-size: 0.85rem; }
+.empty-inline { color: var(--color-faint); font-style: italic; }
+.empty-table { color: var(--color-faint); font-size: 0.75rem; }
