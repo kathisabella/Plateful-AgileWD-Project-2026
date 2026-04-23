@@ -433,9 +433,9 @@ body.page-recipe-details .btn.primary { background: var(--color-text); color: #f
 ════════════════════════════════════════════ */
 
 body.page-edit-recipe .sidebar,
-body.page-upload-recipe .sidebar { padding: 24px; }
+body.page-upload-recipe .sidebar { overflow: auto; }
 body.page-edit-recipe .content,
-body.page-upload-recipe .content { padding: 24px; overflow: auto; }
+body.page-upload-recipe .content { overflow: auto; }
 
 .form-card { background: #fff; border: 1px solid #e3dac0; border-radius: 14px; padding: 20px; margin: auto; max-width: 760px; }
 body.page-upload-recipe .form-card { max-width: 720px; }
