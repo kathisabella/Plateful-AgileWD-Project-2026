@@ -1,7 +1,28 @@
-# Virtual environments
+# ----- Python -----
+__pycache__/
+*.py[cod]
+*$py.class
+ 
+# ----- Virtual environments -----
 venv/
+.venv/
 env/
-
-# IDE/editor settings
+ 
+# ----- Flask / SQLite -----
+instance/
+*.db
+*.sqlite
+*.sqlite3
+ 
+# ----- Environment variables (NEVER commit this) -----
+.env
+.env.local
+ 
+# ----- Editor / IDE -----
 .vscode/
 .idea/
+*.swp
+ 
+# ----- OS junk -----
+.DS_Store
+Thumbs.db

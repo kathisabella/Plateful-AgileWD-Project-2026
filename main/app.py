@@ -1,6 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 
+
+
 app = Flask(__name__)
+
+import os
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-change-in-production')
 
 @app.route('/')
 def login_page():
@@ -72,8 +77,10 @@ def delete_recipe(recipe_id):
 def save_recipe(recipe_id):
     return redirect(url_for('recipe_details', recipe_id=recipe_id))
 
-@app.route('/forgot-password')
+@app.route('/forgot-password', methods=['GET', 'POST'])
 def forgot_password():
+    if request.method == 'POST':
+        return redirect(url_for('login_page'))
     return render_template('forgot_password.html')
 
 @app.route('/terms')
