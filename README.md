@@ -35,27 +35,29 @@ The webpage can be accessed via `https://127.0.0.1:5000`.
 To be updated until project completion
 ```
 Plateful-AgileWD-Project-2026/
-├── app.py
 ├── CITS3403-User Stories.pdf
 ├── README.md
-├── static
-│   └── styles.css
-└── templates
-    ├── 404.html
-    ├── dashboard.html
-    ├── edit_recipe.html
-    ├── explore.html
-    ├── forgot_password.html
-    ├── login.html
-    ├── mealplanner.html
-    ├── my_recipes.html
-    ├── privacy.html
-    ├── profile.html
-    ├── recipe_details.html
-    ├── saved_recipe.html
-    ├── settings.html
-    ├── terms.html
-    └── upload_recipe.html
+└── main
+    ├── app.py
+    ├── requirements.txt
+    ├── static
+    │   └── styles.css
+    └── templates
+        ├── 404.html
+        ├── dashboard.html
+        ├── edit_recipe.html
+        ├── explore.html
+        ├── forgot_password.html
+        ├── login.html
+        ├── mealplanner.html
+        ├── my_recipes.html
+        ├── privacy.html
+        ├── profile.html
+        ├── recipe_details.html
+        ├── saved_recipe.html
+        ├── settings.html
+        ├── terms.html
+        └── upload_recipe.html
 ```
 
 ## Further Documentation (To Be Changed)
