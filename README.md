@@ -16,20 +16,34 @@ Plateful is a web-based recipe-sharing platform whose purpose is to provide a se
 
 ## Project Setup (To Be Changed)
 
-To **install dependencies** from `main/` run:
+All commands below are to be run from inside the main/ folder.
 
-```
-$ pip install -r requirements.txt
-```
+1.Clone the repo and move into the app folder
+    git clone https://github.com/kathisabella/AgileWebDev-Project.git
+    cd AgileWebDev-Project/main
 
-To **run** the app, from `main/` run: 
+2.Create and activate venv(virtual environment)
+macOS/Linux:
+    python3 -m venv venv
+    source venv/bin/activate
 
-```
-$ python3 app.py
-```
+Windows(PowerShell):
+    python -m venv venv
+    .\venv\Scripts\Activate.ps1
 
-The webpage can be accessed via `https://127.0.0.1:5000`.
+3.To **install dependencies** from `main/` run:
 
+    $ pip install -r requirements.txt
+
+4.Set up or RENAME the .env(environment variables)
+    cp .env.example .env
+
+5.To **run** the app, from `main/` run: 
+    flask --app app run --debug
+
+6.The webpage can be accessed via `https://127.0.0.1:5000`.
+
+7.To stop the server, press Ctrl+C. To deactivate the venv when you're done, type deactivate.
 
 ## Project Structure (To Be Updated)
 To be updated until project completion
