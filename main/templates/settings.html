@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{{ page_title|default('Plateful Settings') }}</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    </head>
+
+    <body class="page-settings">
+        <div class="wrapper">
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="logo">
+                    <h1>Plateful</h1>
+                    <p>your recipe space</p>
+                </div>
+
+                <nav>
+                    <a href="{{ url_for('dashboard') }}">Home</a>
+                    <a href="{{ url_for('explore') }}">Explore</a>
+                    <a href="{{ url_for('my_recipes') }}">My Recipes</a>
+                    <a href="{{ url_for('saved_recipes') }}">Saved</a>
+                    <a href="{{ url_for('following') }}">Following</a>
+                    <a href="{{ url_for('meal_planner') }}">Meal Planner</a>
+                    <hr class="nav-divider" />
+                    <a href="{{ url_for('profile') }}">Profile</a>
+                    <a href="{{ url_for('settings') }}" class="active">Settings</a>
+                </nav>
+
+                <div class="sidebar-user">
+                    <div class="avatar">{{ initials|default('--') }}</div>
+                    <div>
+                        <p class="name">{{ display_name|default('Your Name') }}</p>
+                        <p class="handle">{{ username|default('@username') }}</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- MAIN -->
+            <main class="main">
+                <header class="topbar">
+                    <div>Settings</div>
+                </header>
+
+                <div class="content">
+                    <div class="page-intro">
+                        <h2>Account settings</h2>
+                        <p>Manage your profile details and account preferences.</p>
+                    </div>
+
+                    <div class="form-card">
+
+                        <form action="{{ url_for('settings') }}" method="post">
+
+                            <h1>Update your account</h1>
+                            <p class="sub">Change your details here. You can connect this form to Flask later.</p>
+
+                            <div class="form-group">
+                                <label for="display_name">Display Name</label>
+                                <input type="text" id="display_name" name="display_name" value="{{ display_name|default('') }}" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" id="username" name="username" value="{{ username|default('') }}" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="{{ email|default('') }}" />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="bio">Bio</label>
+                                <textarea id="bio" name="bio" rows="4">{{ bio|default('') }}</textarea>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group">
+                                    <label for="new_password">New Password</label>
+                                    <input type="password" id="new_password" name="new_password" />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="confirm_password">Confirm Password</label>
+                                    <input type="password" id="confirm_password" name="confirm_password" />
+                                </div>
+
+                            </div>
+
+                            <div class="actions">
+                                <button type="submit" class="btn save">Save Changes</button>
+                                <a href="{{ url_for('profile') }}" class="btn" style="text-align:center;">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>

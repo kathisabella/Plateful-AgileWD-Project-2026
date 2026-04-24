@@ -1,0 +1,92 @@
+from flask import Flask, render_template, request, redirect, url_for
+
+app = Flask(__name__)
+
+@app.route('/')
+def login_page():
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def login():
+    return redirect(url_for('dashboard'))
+
+@app.route('/signup', methods=['POST'])
+def signup():
+    return redirect(url_for('dashboard'))
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+@app.route('/explore')
+def explore():
+    return render_template('explore.html')
+
+@app.route('/my-recipes')
+def my_recipes():
+    return render_template('my_recipes.html')
+
+@app.route('/saved')
+def saved_recipes():
+    return render_template('saved_recipe.html')
+
+@app.route('/following')
+def following():
+    return render_template('profile.html')
+
+@app.route('/meal-planner')
+def meal_planner():
+    return render_template('mealplanner.html')
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    if request.method == 'POST':
+        return redirect(url_for('profile'))
+    return render_template('settings.html')
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_recipe():
+    if request.method == 'POST':
+        return redirect(url_for('dashboard'))
+    return render_template('upload_recipe.html')
+
+@app.route('/recipe/<int:recipe_id>')
+def recipe_details(recipe_id):
+    return render_template('recipe_details.html', recipe_id=recipe_id)
+
+@app.route('/recipe/<int:recipe_id>/edit', methods=['GET', 'POST'])
+def edit_recipe(recipe_id):
+    if request.method == 'POST':
+        return redirect(url_for('recipe_details', recipe_id=recipe_id))
+    return render_template('edit_recipe.html', recipe_id=recipe_id)
+
+@app.route('/recipe/<int:recipe_id>/delete', methods=['POST'])
+def delete_recipe(recipe_id):
+    return redirect(url_for('dashboard'))
+
+@app.route('/recipe/<int:recipe_id>/save', methods=['POST'])
+def save_recipe(recipe_id):
+    return redirect(url_for('recipe_details', recipe_id=recipe_id))
+
+@app.route('/forgot-password')
+def forgot_password():
+    return render_template('forgot_password.html')
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
+
+if __name__ == '__main__':
+    app.run(debug=True)
