@@ -15,20 +15,47 @@ The web application Plateful was created for a group project as part of the unit
 Plateful is a web-based recipe-sharing platform whose purpose is to provide a seamless and enjoyable environment where users can create, share, discover, and interact with a wide variety of recipes. The web application will focus on the social and collaborative aspect of cooking, encouraging users to not only upload their own recipes, but also engage with other members through ratings, comments, collections, and following. 
 
 ## Project Setup (To Be Changed)
-**This is for installing dependencies (if there are any), how to run/start the web app, where to access the web app (website link), direction to user manual.**
+
+To **install dependencies** from `main/` run:
+
+```
+$ pip install -r requirements.txt
+```
+
+To **run** the app, from `main/` run: 
+
+```
+$ python3 app.py
+```
+
+The webpage can be accessed via `https://127.0.0.1:5000`.
+
 
 ## Project Structure (To Be Updated)
 To be updated until project completion
 ```
-AgileWebDev-Project/
+Plateful-AgileWD-Project-2026/
+├── app.py
 ├── CITS3403-User Stories.pdf
 ├── README.md
-├── preview edit_recipe_page.html
-├── preview explore_page.html
-├── preview recipe_details_page.html
-├── preview upload_recipe_page.html
-├── saved_recipe.html
-└── user_dashboard.html
+├── static
+│   └── styles.css
+└── templates
+    ├── 404.html
+    ├── dashboard.html
+    ├── edit_recipe.html
+    ├── explore.html
+    ├── forgot_password.html
+    ├── login.html
+    ├── mealplanner.html
+    ├── my_recipes.html
+    ├── privacy.html
+    ├── profile.html
+    ├── recipe_details.html
+    ├── saved_recipe.html
+    ├── settings.html
+    ├── terms.html
+    └── upload_recipe.html
 ```
 
 ## Further Documentation (To Be Changed)
