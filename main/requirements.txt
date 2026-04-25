@@ -1,29 +1,4 @@
-# ----- Python -----
-__pycache__/
-*.py[cod]
-*$py.class
+Flask==3.0.3
+Flask-WTF==1.2.1
+email-validator==2.1.1
 python-dotenv==1.0.1
- 
-# ----- Virtual environments -----
-venv/
-.venv/
-env/
- 
-# ----- Flask / SQLite -----
-instance/
-*.db
-*.sqlite
-*.sqlite3
- 
-# ----- Environment variables (NEVER commit this) -----
-.env
-.env.local
- 
-# ----- Editor / IDE -----
-.vscode/
-.idea/
-*.swp
- 
-# ----- OS junk -----
-.DS_Store
-Thumbs.db
