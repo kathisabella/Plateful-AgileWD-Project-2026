@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for
 from dotenv import load_dotenv
 import os
 
+from routes.mealplanner import get_meal_planner_context
+
+
 load_dotenv()
 
 app = Flask(__name__)
@@ -41,7 +44,8 @@ def following():
 
 @app.route('/meal-planner')
 def meal_planner():
-    return render_template('mealplanner.html')
+    context = get_meal_planner_context()
+    return render_template('mealplanner.html', **context)
 
 @app.route('/profile')
 def profile():
