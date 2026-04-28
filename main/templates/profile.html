@@ -70,16 +70,17 @@
           <!-- PROFILE HEADER -->
           <div class="profile-header">
             <div class="profile-top">
-              <div class="avatar-lg">JL</div>
+              <div class="avatar-lg">{{ initials|default('--') }}</div>
 
               <div class="profile-identity">
-                <h2>Profile Name</h2>
-                <p class="handle">{{ username|default('@username') }} · joined date</p>
-                <p class="bio">Add a short profile bio here.</p>
+                <h2>{{ display_name|default('Your Name') }}</h2>
+                <p class="handle">{{ username|default('@username') }} · {{ joined_date|default('') }}</p>
+                <p class="bio">{{ bio|default('') }}</p>
 
                 <div class="profile-tags">
-                  <span class="tag">Tag 1</span>
-                  <span class="tag">Tag 2</span>
+                  {% for tag in tags|default([]) %}
+                  <span class="tag">{{ tag }}</span>
+                  {% endfor %}
                 </div>
               </div>
 
@@ -91,27 +92,27 @@
 
             <div class="profile-stats">
               <div class="ps-item">
-                <p class="ps-value">0</p>
+                <p class="ps-value">{{ recipe_count|default(0) }}</p>
                 <p class="ps-label">Recipes</p>
               </div>
 
               <div class="ps-item">
-                <p class="ps-value">0</p>
+                <p class="ps-value">{{ total_saves|default(0) }}</p>
                 <p class="ps-label">Total saves</p>
               </div>
 
               <div class="ps-item">
-                <p class="ps-value">0</p>
+                <p class="ps-value">{{ saved_count|default(0) }}</p>
                 <p class="ps-label">Saved</p>
               </div>
 
               <div class="ps-item">
-                <p class="ps-value">0</p>
+                <p class="ps-value">{{ following_count|default(0) }}</p>
                 <p class="ps-label">Following</p>
               </div>
 
               <div class="ps-item">
-                <p class="ps-value">0</p>
+                <p class="ps-value">{{ followers_count|default(0) }}</p>
                 <p class="ps-label">Followers</p>
               </div>
             </div>
@@ -119,10 +120,10 @@
 
           <!-- PROFILE NAV TABS -->
           <div class="profile-nav">
-            <button class="pnav-btn active" onclick="switchProfileTab('recipes', this)">Recipes</button>
-            <button class="pnav-btn" onclick="switchProfileTab('saved', this)">Saved</button>
-            <button class="pnav-btn" onclick="switchProfileTab('activity', this)">Activity</button>
-            <button class="pnav-btn" onclick="switchProfileTab('followers', this)">Followers</button>
+            <button class="pnav-btn active" data-tab="recipes">Recipes</button>
+            <button class="pnav-btn" data-tab="saved">Saved</button>
+            <button class="pnav-btn" data-tab="activity">Activity</button>
+            <button class="pnav-btn" data-tab="followers">Followers</button>
           </div>
 
           <!-- TAB: RECIPES -->
@@ -141,7 +142,7 @@
           <div class="tab-panel" id="tab-saved">
             <div class="section-title">
               <h3>Saved recipes</h3>
-              <span style="font-size:0.78rem; color:var(--color-muted);">61 recipes in 4 collections</span>
+              <span style="font-size:0.78rem; color:var(--color-muted);">{{ saved_count|default(0) }} recipe{{ 's' if saved_count != 1 else '' }}</span>
             </div>
 
             <!-- collection pills -->
@@ -232,7 +233,7 @@
                   <div class="section-title">
                     <h3>
                       Followers
-                      <span style="font-size:0.8rem; color:var(--color-muted); font-family:var(--font-ui); font-weight:400;">134</span>
+                      <span style="font-size:0.8rem; color:var(--color-muted); font-family:var(--font-ui); font-weight:400;">{{ followers_count|default(0) }}</span>
                     </h3>
                   </div>
 
@@ -292,7 +293,7 @@
                     <h3>
                       Following
                       <span style="font-size:0.8rem; color:var(--color-muted); font-family:var(--font-ui); font-weight:400;">
-                        27
+                        {{ following_count|default(0) }}
                       </span>
                     </h3>
                   </div>
@@ -333,14 +334,7 @@
       </main>
     </div>
 
-    <script>
-      function switchProfileTab(name, btn) {
-        document.querySelectorAll('.pnav-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('tab-' + name).classList.add('active');
-      }
-    </script>
+    <script src="{{ url_for('static', filename='profile.js') }}"></script>
 
   </body>
 </html>
