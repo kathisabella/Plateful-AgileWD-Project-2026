@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from dotenv import load_dotenv
 import os
 
@@ -44,7 +44,23 @@ def following():
 
 @app.route('/meal-planner', methods=['GET'])
 def meal_planner():
-    context = get_meal_planner_context()
+    days = [
+        "Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday", "Sunday"
+    ]
+
+    meal_types = ["Breakfast", "Lunch", "Dinner"]
+
+    saved_recipes = session.get("saved_recipes", [])
+
+    user = {
+        "initials": session.get("initials", "--"),
+        "display_name": session.get("display_name", "Your Name"),
+        "username": session.get("username", "@username")
+    }
+
+    context = get_meal_planner_context(days, meal_types, saved_recipes, user)
+
     return render_template('mealplanner.html', **context)
 
 @app.route('/profile', methods=['GET'])
