@@ -73,7 +73,7 @@
 
             <div class="form-footer">
               No account?
-              <a href="#" onclick="switchTabByName('signup')">Create one free →</a>
+              <button type="button" onclick="switchTabByName('signup')">Create one free →</button>
             </div>
           </form>
 
@@ -134,40 +134,14 @@
 
             <div class="form-footer">
               Already have an account?
-              <a href="#" onclick="switchTabByName('login')">
-                Sign in →
-              </a>
+              <button type="button" onclick="switchTabByName('login')">Sign in →</button>
             </div>
           </form>
         </div>
       </div>
     </div>
 
-    <script>
-      function switchTab(name, btn) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('panel-' + name).classList.add('active');
-      }
-
-      function switchTabByName(name) {
-        const idx = name === 'login' ? 0 : 1;
-        switchTab(name, document.querySelectorAll('.tab-btn')[idx]);
-      }
-
-      function togglePass(id, btn) {
-        const input = document.getElementById(id);
-
-        if (input.type === 'password') {
-          input.type = 'text';
-          btn.textContent = 'hide';
-        } else {
-          input.type = 'password';
-          btn.textContent = 'show';
-        }
-      }
-    </script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 
   </body>
 </html>

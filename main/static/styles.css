@@ -639,8 +639,9 @@ body.page-login { display: flex; min-height: 100vh; }
 .btn-social:hover { background: #dde4d3; }
 
 .form-footer { margin-top: 22px; text-align: center; font-size: 0.78rem; color: var(--color-muted); }
-.form-footer a { color: var(--color-accent); font-weight: 600; text-decoration: none; }
-.form-footer a:hover { text-decoration: underline; text-underline-offset: 2px; }
+.form-footer a, .form-footer button { color: var(--color-accent); font-weight: 600; text-decoration: none; }
+.form-footer button { background: none; border: none; padding: 0; cursor: pointer; font-size: inherit; font-family: inherit; }
+.form-footer a:hover, .form-footer button:hover { text-decoration: underline; text-underline-offset: 2px; }
 
 .password-wrap { position: relative; }
 .password-wrap input { padding-right: 40px; }
@@ -1362,8 +1363,9 @@ body.page-login { display: flex; min-height: 100vh; }
 .btn-social:hover { background: #dde4d3; }
 
 .form-footer { margin-top: 22px; text-align: center; font-size: 0.78rem; color: var(--color-muted); }
-.form-footer a { color: var(--color-accent); font-weight: 600; text-decoration: none; }
-.form-footer a:hover { text-decoration: underline; text-underline-offset: 2px; }
+.form-footer a, .form-footer button { color: var(--color-accent); font-weight: 600; text-decoration: none; }
+.form-footer button { background: none; border: none; padding: 0; cursor: pointer; font-size: inherit; font-family: inherit; }
+.form-footer a:hover, .form-footer button:hover { text-decoration: underline; text-underline-offset: 2px; }
 
 .password-wrap { position: relative; }
 .password-wrap input { padding-right: 40px; }

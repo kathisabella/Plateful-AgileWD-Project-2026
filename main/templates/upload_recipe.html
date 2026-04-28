@@ -59,14 +59,14 @@
 
               <!-- TITLE -->
               <div class="form-group">
-                <label>Recipe Title</label>
-                <input type="text" name="title" placeholder=""/>
+                <label for="title">Recipe Title</label>
+                <input type="text" id="title" name="title" placeholder=""/>
               </div>
 
               <!-- CUISINE + DIFFICULTY -->
               <div class="row">
                 <div class="form-group">
-                  <label>Cuisine</label>
+                  <label for="cuisine">Cuisine</label>
 
                   <input type="text" id="cuisine" name="cuisine" list="cuisine-options" placeholder="Type or choose cuisine"/>
 
@@ -84,9 +84,9 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Difficulty</label>
+                  <label for="difficulty">Difficulty</label>
 
-                  <select name="difficulty">
+                  <select id="difficulty" name="difficulty">
                     <option value="">Select</option>
                     <option>Easy</option>
                     <option>Medium</option>
@@ -98,29 +98,29 @@
               <!-- PREP TIME + SERVINGS -->
               <div class="row">
                 <div class="form-group">
-                  <label>Prep Time</label>
-                  <input type="text" name="prep_time" placeholder=""/>
+                  <label for="prep-time">Prep Time</label>
+                  <input type="text" id="prep-time" name="prep_time" placeholder=""/>
                 </div>
 
                 <div class="form-group">
-                  <label>Servings</label>
-                  <input type="number" name="servings" min="1" step="1" placeholder="e.g. 4" required/>
+                  <label for="servings">Servings</label>
+                  <input type="number" id="servings" name="servings" min="1" step="1" placeholder="e.g. 4" required/>
                 </div>
               </div>
 
               <!-- DESCRIPTION -->
               <div class="form-group">
-                <label>Description</label>
-                <textarea name="description" rows="3" placeholder=""></textarea>
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="3" placeholder=""></textarea>
               </div>
 
               <!-- INGREDIENTS -->
               <div class="form-group">
-                <label>Ingredients</label>
+                <label for="ingredient-0">Ingredients</label>
 
                 <div class="list-input">
+                  <input type="text" id="ingredient-0" name="ingredients" placeholder=""/>
                   <input type="text" name="ingredients" placeholder=""/>
-                  <input type="text" name="ingredients"placeholder=""/>
                 </div>
 
                 <div class="add-btn">+ Add ingredient</div>
@@ -128,10 +128,10 @@
 
               <!-- STEPS -->
               <div class="form-group">
-                <label>Steps</label>
+                <label for="step-0">Steps</label>
 
                 <div class="list-input">
-                  <textarea name="steps" rows="2" placeholder=""></textarea>
+                  <textarea id="step-0" name="steps" rows="2" placeholder=""></textarea>
                   <textarea name="steps" rows="2" placeholder=""></textarea>
                 </div>
 
@@ -140,9 +140,9 @@
 
               <!-- IMAGE -->
               <div class="form-group">
-                <label>Upload Image</label>
+                <label for="image">Upload Image</label>
 
-                <input type="file" name="image"/>
+                <input type="file" id="image" name="image"/>
               </div>
 
               <!-- SUBMIT -->
@@ -152,5 +152,8 @@
         </div>
       </main>
     </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+
   </body>
 </html>
