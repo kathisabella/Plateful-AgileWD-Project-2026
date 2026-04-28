@@ -60,12 +60,16 @@
           <div class="page-intro">
             <div>
               <h2>Meal planner</h2>
-              <p>Use this template to build your weekly planner.</p>
+              <p>Build your weekly planner from your saved recipes.</p>
             </div>
 
             <div class="planner-actions">
               <a href="{{ url_for('meal_planner', shuffle='week') }}" class="btn-solid">Shuffle week</a>
-              <a href="{{ url_for('meal_planner', shuffle='day', day='Monday') }}" class="btn-soft">Shuffle one day</a>
+              
+              {% if days %}
+                <a href="{{ url_for('meal_planner', shuffle='day', day=days[0]) }}" class="btn-soft">Shuffle one day</a>
+              {% endif %}
+
             </div>
           </div>
 
@@ -102,7 +106,7 @@
                   <h3>Weekly planner table</h3>
                   <p>Each cell is a saved recipe suggestion for that meal slot.</p>
                 </div>
-                <div class="meal-tag">demo layout</div>
+                <div class="meal-tag">{{ stats.planner_mode }}</div>
               </div>
 
               <div class="week-table-wrap">
@@ -110,13 +114,11 @@
                   <thead>
                     <tr>
                       <th>Meal</th>
-                      <th>Monday</th>
-                      <th>Tuesday</th>
-                      <th>Wednesday</th>
-                      <th>Thursday</th>
-                      <th>Friday</th>
-                      <th>Saturday</th>
-                      <th>Sunday</th>
+
+                      {% for day in days %}
+                        <th>{{ day }}</th>
+                      {% endfor %}
+
                     </tr>
                   </thead>
 
@@ -127,11 +129,21 @@
 
                         {% for day in days %}
                           <td class="meal-cell">
-                            <div class="meal-card {{ meal_type|lower }}">
-                              <strong>{{ week_plan[day][meal_type].name }}</strong>
-                              <p>{{ week_plan[day][meal_type].time }} mins</p>
-                              <small>{{ week_plan[day][meal_type].tag }}</small>
-                            </div>
+                            {% set recipe = week_plan[day][meal_type] %}
+
+                            {% if recipe %}
+                              <div class="meal-card {{ meal_type|lower }}">
+                                <div class="meal-name">{{ recipe.name }}</div>
+                                <div class="meal-meta">
+                                  <span>{{ recipe.time }} mins</span>
+                                  <span>{{ recipe.meal_type }}</span>
+                                </div>
+                              </div>
+                            {% else %}
+                              <div class="meal-card {{ meal_type|lower }}">
+                                <p class="empty-table">No recipe available</p>
+                              </div>
+                            {% endif %}
                           </td>
                         {% endfor %}
                       </tr>
@@ -141,7 +153,9 @@
               </div>
 
               <div class="legend">
-                <p class="empty-state">Add planner details here.</p>
+                {% for meal_type in meal_types %}
+                  <span>{{ meal_type }}</span>
+                {% endfor %}
               </div>
             </section>
 
@@ -153,9 +167,26 @@
                     <p>Examples of recipes the planner can draw from.</p>
                   </div>
                 </div>
-                <div class="mini-list">
-                  <p class="empty-state">Add planner details here.</p>
-                </div>
+
+                {% if saved_recipes %}
+                  {% for recipe in saved_recipes %}
+                    <div class="mini-item">
+                      <div class="mini-left">
+                        <div class="mini-icon">🍽️</div>
+                        <div>
+                          <div class="mini-name">{{ recipe.name }}</div>
+                          <div class="mini-sub">{{ recipe.meal_type }} · {{ recipe.tag }}</div>
+                        </div>
+                      </div>
+                      <div class="mini-score">{{ recipe.time }} mins</div>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <div class="empty-note">
+                    No saved recipes yet.
+                  </div>
+                {% endif %}
+
               </section>
             </div>
           </div>
