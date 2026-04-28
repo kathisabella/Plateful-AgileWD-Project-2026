@@ -103,46 +103,27 @@
           <h3>Recent activity</h3>
         </div>
         <div class="feed">
+          {% for item in activity|default([]) %}
           <div class="feed-item">
-            <span class="feed-text"><strong>@community_member</strong> saved your Roasted Vegetable Bake</span>
-            <span class="feed-time">2 hours ago</span>
+            <span class="feed-text">{{ item.text|safe }}</span>
+            <span class="feed-time">{{ item.time }}</span>
           </div>
-          <div class="feed-item">
-            <span class="feed-text"><strong>@cookjournal</strong> left a comment on One-Pan Baked Eggs: "Made this twice already, the spice level is perfect"</span>
-            <span class="feed-time">5 hours ago</span>
-          </div>
-          <div class="feed-item">
-            <span class="feed-text"><strong>@bakersoph</strong> started following you</span>
-            <span class="feed-time">Yesterday</span>
-          </div>
-          <div class="feed-item">
-            <span class="feed-text"><strong>@recipewriter</strong> gave Roasted Vegetable Bake ⭐ 5</span>
-            <span class="feed-time">2 days ago</span>
-          </div>
-          <div class="feed-item">
-            <span class="feed-text">You posted <strong>Herb Flatbread</strong></span>
-            <span class="feed-time">3 days ago</span>
-          </div>
-          <div class="feed-item">
-            <span class="feed-text"><strong>@sharedtable</strong> saved your One-Pan Baked Eggs</span>
-            <span class="feed-time">4 days ago</span>
-          </div>
-          <div class="feed-item">
-            <span class="feed-text">You saved <strong>Lemon Yogurt Cake</strong> by @bakehouse</span>
-            <span class="feed-time">5 days ago</span>
-          </div>
+          {% else %}
+          <p class="empty-state">No recent activity yet.</p>
+          {% endfor %}
         </div>
       </section>
     </div>
 
     <div class="col-right">
+      {% if pin_note %}
       <div class="pin-card">
         <p class="pin-label">📌 Note to self</p>
-        <p>"Try the harira with preserved lemon next time. Also — test the croissant dough overnight."</p>
+        <p>{{ pin_note }}</p>
       </div>
+      {% endif %}
     </div>
   </div>
-  <p class="empty-state">No activity yet.</p>
 </div>
 
 <!-- TAB: FOLLOWERS -->
@@ -158,46 +139,18 @@
         </div>
 
         <ul class="follow-list">
+          {% for f in followers|default([]) %}
           <li class="follow-item">
-            <div class="avatar">{{ initials|default('--') }}</div>
+            <div class="avatar">{{ f.initials|default('--') }}</div>
             <div class="info">
-              <p class="uname">@recipewriter</p>
-              <p class="sub">Posted 1 hr ago</p>
+              <p class="uname">{{ f.username }}</p>
+              <p class="sub">{{ f.subtitle|default('') }}</p>
             </div>
-            <button class="btn-sm-follow">Following</button>
+            <button class="btn-sm-follow">{{ 'Following' if f.is_following else 'Follow back' }}</button>
           </li>
-          <li class="follow-item">
-            <div class="avatar">{{ initials|default('--') }}</div>
-            <div class="info">
-              <p class="uname">@homekitchen</p>
-              <p class="sub">3 recipes this week</p>
-            </div>
-            <button class="btn-sm-follow">Following</button>
-          </li>
-          <li class="follow-item">
-            <div class="avatar" style="background:#8a6e52;">{{ initials|default('--') }}</div>
-            <div class="info">
-              <p class="uname">@cookjournal</p>
-              <p class="sub">Posted 2 days ago</p>
-            </div>
-            <button class="btn-sm-follow">Following</button>
-          </li>
-          <li class="follow-item">
-            <div class="avatar" style="background:#7a6e8a;">{{ initials|default('--') }}</div>
-            <div class="info">
-              <p class="uname">@bakersoph</p>
-              <p class="sub">New follower</p>
-            </div>
-            <button class="btn-sm-follow" style="background:var(--color-text); color:var(--color-surface); border-color:var(--color-text);">Follow back</button>
-          </li>
-          <li class="follow-item">
-            <div class="avatar" style="background:#6a8a7a;">{{ initials|default('--') }}</div>
-            <div class="info">
-              <p class="uname">@community_member</p>
-              <p class="sub">Saved 3 of your recipes</p>
-            </div>
-            <button class="btn-sm-follow" style="background:var(--color-text); color:var(--color-surface); border-color:var(--color-text);">Follow back</button>
-          </li>
+          {% else %}
+          <p class="empty-state">No followers yet.</p>
+          {% endfor %}
         </ul>
       </section>
     </div>
@@ -212,27 +165,17 @@
         </div>
 
         <ul class="follow-list">
+          {% for f in following_users|default([]) %}
           <li class="follow-item">
-            <div class="avatar">{{ initials|default('--') }}</div>
+            <div class="avatar">{{ f.initials|default('--') }}</div>
             <div class="info">
-              <p class="uname">@recipewriter</p>
-              <p class="sub">1 new recipe</p>
+              <p class="uname">{{ f.username }}</p>
+              <p class="sub">{{ f.subtitle|default('') }}</p>
             </div>
           </li>
-          <li class="follow-item">
-            <div class="avatar">{{ initials|default('--') }}</div>
-            <div class="info">
-              <p class="uname">@homekitchen</p>
-              <p class="sub">3 this week</p>
-            </div>
-          </li>
-          <li class="follow-item">
-            <div class="avatar" style="background:#8a6e52;">{{ initials|default('--') }}</div>
-            <div class="info">
-              <p class="uname">@bakehouse</p>
-              <p class="sub">Posted 3 days ago</p>
-            </div>
-          </li>
+          {% else %}
+          <p class="empty-state">Not following anyone yet.</p>
+          {% endfor %}
         </ul>
       </section>
     </div>

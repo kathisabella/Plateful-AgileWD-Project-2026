@@ -14,7 +14,11 @@
 </div>
 
 <div class="panel-recipes">
-  <p class="empty-state">Feature highlights can go here.</p>
+  {% if highlights %}
+  {% for h in highlights %}
+  <p class="empty-state">{{ h }}</p>
+  {% endfor %}
+  {% endif %}
 </div>
 {% endblock %}
 
