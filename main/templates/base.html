@@ -14,10 +14,10 @@
     <div class="wrapper">
 
       <aside class="sidebar">
-        <div class="logo">
+        <a href="{{ url_for('dashboard') }}" class="logo">
           <h1>Plateful</h1>
           <p>your recipe space</p>
-        </div>
+        </a>
 
         <nav>
           {% block sidebar_nav %}
