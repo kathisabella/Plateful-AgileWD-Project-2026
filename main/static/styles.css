@@ -1063,6 +1063,7 @@ thead th:first-child { width: 98px; background: #f6f3e5; }
 .tip strong { display: block; font-size: 0.8rem; margin-bottom: 3px; }
 .tip span { font-size: 0.75rem; color: var(--color-muted); line-height: 1.4; }
 
+.legend { margin-top: 20px; padding: 12px 18px 18px; }
 .legend { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 18px 18px; }
 .legend span { font-size: 0.72rem; color: var(--color-muted); padding: 4px 10px; border-radius: 999px; border: 1px solid #ddd4b8; background: #fff; }
 
