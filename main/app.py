@@ -8,9 +8,9 @@ from routes.mealplanner import get_meal_planner_context
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  # NOSONAR — loaded from .env, not hardcoded
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def login_page():
     return render_template('login.html')
 
@@ -22,32 +22,32 @@ def login():
 def signup():
     return redirect(url_for('dashboard'))
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods=['GET'])
 def dashboard():
     return render_template('dashboard.html')
 
-@app.route('/explore')
+@app.route('/explore', methods=['GET'])
 def explore():
     return render_template('explore.html')
 
-@app.route('/my-recipes')
+@app.route('/my-recipes', methods=['GET'])
 def my_recipes():
     return render_template('my_recipes.html')
 
-@app.route('/saved')
+@app.route('/saved', methods=['GET'])
 def saved_recipes():
     return render_template('saved_recipe.html')
 
-@app.route('/following')
+@app.route('/following', methods=['GET'])
 def following():
-    return render_template('profile.html')
+    return render_template('following.html')
 
-@app.route('/meal-planner')
+@app.route('/meal-planner', methods=['GET'])
 def meal_planner():
     context = get_meal_planner_context()
     return render_template('mealplanner.html', **context)
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET'])
 def profile():
     return render_template('profile.html')
 
@@ -63,7 +63,7 @@ def upload_recipe():
         return redirect(url_for('dashboard'))
     return render_template('upload_recipe.html')
 
-@app.route('/recipe/<int:recipe_id>')
+@app.route('/recipe/<int:recipe_id>', methods=['GET'])
 def recipe_details(recipe_id):
     return render_template('recipe_details.html', recipe_id=recipe_id)
 
@@ -87,11 +87,11 @@ def forgot_password():
         return redirect(url_for('login_page'))
     return render_template('forgot_password.html')
 
-@app.route('/terms')
+@app.route('/terms', methods=['GET'])
 def terms():
     return render_template('terms.html')
 
-@app.route('/privacy')
+@app.route('/privacy', methods=['GET'])
 def privacy():
     return render_template('privacy.html')
 

@@ -1,167 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-  
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>{{ page_title|default('Plateful Dashboard') }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
-  </head>
+{% extends 'base.html' %}
 
-  <body class="page-dashboard">
-    <div class="wrapper">
+{% block title %}{{ page_title|default('Plateful Dashboard') }}{% endblock %}
+{% block body_class %}page-dashboard{% endblock %}
 
-      <!-- SIDEBAR -->
-      <aside class="sidebar">
-        <div class="logo">
-          <h1>Plateful</h1>
-          <p>your recipe space</p>
-        </div>
-
-        <nav>
-          <a href="{{ url_for('dashboard') }}" class="active">Home</a>
-          <a href="{{ url_for('explore') }}">Explore</a>
-          <a href="{{ url_for('my_recipes') }}">My Recipes</a>
-          <a href="{{ url_for('saved_recipes') }}">Saved</a>
-          <a href="{{ url_for('following') }}">Following</a>
-          <a href="{{ url_for('meal_planner') }}">Meal Planner</a>
-          <hr class="nav-divider" />
-          <a href="{{ url_for('profile') }}">Profile</a>
-          <a href="{{ url_for('settings') }}">Settings</a>
-        </nav>
-
-        <div class="sidebar-user">
-          <div class="avatar">{{ initials|default('--') }}</div>
-          <div>
-            <p class="name">{{ display_name|default('Your Name') }}</p>
-            <p class="handle">{{ username|default('@username') }}</p>
-          </div>
-        </div>
-      </aside>
-
-      <!-- MAIN -->
-      <main class="main">
-
-        <!-- TOPBAR -->
-        <header class="topbar">
-          <div class="topbar-left">
-            <span class="hi">{{ greeting|default('Welcome') }}</span>
-            <span class="date">{{ page_date|default('') }}</span>
-          </div>
-          <div class="topbar-right">
-            <div class="search-wrap">
-              <span class="search-icon">🔍</span>
-              <input type="text" placeholder="Search recipes…" />
-            </div>
-            <button class="notif-btn">
-              🔔
-              <span class="notif-badge">0</span>
-            </button>
-            <a class="btn-upload" href="{{ url_for('upload_recipe') }}">+ New Recipe</a>
-          </div>
-        </header>
-
-        <!-- CONTENT -->
-        <div class="content">
-
-          <!-- page intro — just a line, not a hero -->
-          <div class="page-intro">
-            <h2>What's cooking today?</h2>
-            <p>Here's a quick look at what's been happening on your profile.</p>
-          </div>
-
-          <!-- STAT STRIP — one connected bar, not 4 separate cards -->
-          <div class="stat-strip">
-            <div class="stat-item">
-              <div class="label">Recipes posted</div>
-              <div class="value">0</div>
-              <div class="hint"></div>
-            </div>
-            <div class="stat-item">
-              <div class="label">Total saves</div>
-              <div class="value">0</div>
-              <div class="hint"></div>
-            </div>
-            <div class="stat-item">
-              <div class="label">Following</div>
-              <div class="value">0</div>
-              <div class="hint"></div>
-            </div>
-            <div class="stat-item">
-              <div class="label">Saved by you</div>
-              <div class="value">0</div>
-              <div class="hint"></div>
-            </div>
-          </div>
-
-          <!-- TWO COLUMNS -->
-          <div class="columns">
-
-            <!-- LEFT -->
-            <div class="col-left">
-
-              <!-- Recently saved — no panel box -->
-              <section>
-                <div class="section-title">
-                  <h3>Recently saved</h3>
-                  <a href="{{ url_for('saved_recipes') }}">See all</a>
-                </div>
-                <div class="recipe-grid">
-                  <p class="empty-state">No recipes added yet.</p>
-                </div>
-              </section>
-
-              <!-- Popularity — bare list, no panel -->
-              <section>
-                <div class="section-title">
-                  <h3>Your top recipes</h3>
-                  <a href="{{ url_for('my_recipes') }}">Manage</a>
-                </div>
-                <ul class="pop-list">
-                  <p class="empty-state">No top recipes to show yet.</p>
-                </ul>
-              </section>
-
-            </div>
-
-            <!-- RIGHT -->
-            <div class="col-right">
-
-              <!-- Activity — feed style, no panel box -->
-              <section>
-                <div class="section-title">
-                  <h3>Activity</h3>
-                </div>
-                <div class="feed">
-                  <p class="empty-state">No recent activity yet.</p>
-                </div>
-              </section>
-
-              <!-- Following -->
-              <section>
-                <div class="section-title">
-                  <h3>People you follow</h3>
-                  <a href="{{ url_for('following') }}">See all</a>
-                </div>
-                <ul class="follow-list">
-                  <p class="empty-state">No suggested accounts yet.</p>
-                </ul>
-              </section>
-
-              <!-- Weather -->
-              <div class="weather-card">
-                <p class="w-top">Local update</p>
-                <p class="w-msg">"Sounds like a soup kind of night."</p>
-                <a href="{{ url_for('explore') }}">Browse recipes →</a>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </main>
+{% block topbar %}
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="hi">{{ greeting|default('Welcome') }}</span>
+    <span class="date">{{ page_date|default('') }}</span>
+  </div>
+  <div class="topbar-right">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="Search recipes…" />
     </div>
-  </body>
-</html>
+    <button class="notif-btn">🔔 <span class="notif-badge">0</span></button>
+    <a class="btn-upload" href="{{ url_for('upload_recipe') }}">+ New Recipe</a>
+  </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="page-intro">
+  <h2>What's cooking today?</h2>
+  <p>Here's a quick look at what's been happening on your profile.</p>
+</div>
+
+<div class="stat-strip">
+  <div class="stat-item">
+    <div class="label">Recipes posted</div>
+    <div class="value">{{ recipe_count|default(0) }}</div>
+    <div class="hint"></div>
+  </div>
+  <div class="stat-item">
+    <div class="label">Total saves</div>
+    <div class="value">{{ total_saves|default(0) }}</div>
+    <div class="hint"></div>
+  </div>
+  <div class="stat-item">
+    <div class="label">Following</div>
+    <div class="value">{{ following_count|default(0) }}</div>
+    <div class="hint"></div>
+  </div>
+  <div class="stat-item">
+    <div class="label">Saved by you</div>
+    <div class="value">{{ saved_count|default(0) }}</div>
+    <div class="hint"></div>
+  </div>
+</div>
+
+<div class="columns">
+  <div class="col-left">
+    <section>
+      <div class="section-title">
+        <h3>Recently saved</h3>
+        <a href="{{ url_for('saved_recipes') }}">See all</a>
+      </div>
+      <div class="recipe-grid">
+        <p class="empty-state">No recipes added yet.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h3>Your top recipes</h3>
+        <a href="{{ url_for('my_recipes') }}">Manage</a>
+      </div>
+      <ul class="pop-list">
+        <p class="empty-state">No top recipes to show yet.</p>
+      </ul>
+    </section>
+  </div>
+
+  <div class="col-right">
+    <section>
+      <div class="section-title">
+        <h3>Activity</h3>
+      </div>
+      <div class="feed">
+        <p class="empty-state">No recent activity yet.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h3>People you follow</h3>
+        <a href="{{ url_for('following') }}">See all</a>
+      </div>
+      <ul class="follow-list">
+        <p class="empty-state">No suggested accounts yet.</p>
+      </ul>
+    </section>
+
+    <div class="weather-card">
+      <p class="w-top">Local update</p>
+      <p class="w-msg">"Sounds like a soup kind of night."</p>
+      <a href="{{ url_for('explore') }}">Browse recipes →</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

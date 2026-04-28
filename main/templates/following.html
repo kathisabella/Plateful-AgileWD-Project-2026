@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ page_title|default('Plateful Following') }}{% endblock %}
+{% block body_class %}page-following{% endblock %}
+
+{% block topbar %}
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="hi">Following</span>
+    <span class="date">{{ page_date|default('') }}</span>
+  </div>
+  <div class="topbar-right">
+    <a href="{{ url_for('upload_recipe') }}" class="btn-upload">+ New Recipe</a>
+  </div>
+</header>
+{% endblock %}
+
+{% block content %}
+<div class="page-intro">
+  <h2>People you follow</h2>
+  <p>Recipes and activity from the accounts you follow.</p>
+</div>
+
+<div class="columns">
+  <div class="col-left">
+    <section>
+      <div class="section-title">
+        <h3>Following</h3>
+      </div>
+      <ul class="follow-list">
+        {% if following %}
+          {% for user in following %}
+          <li class="follow-item">
+            <div class="avatar">{{ user.initials|default('--') }}</div>
+            <div class="info">
+              <p class="uname">{{ user.username }}</p>
+              <p class="sub">{{ user.subtitle|default('') }}</p>
+            </div>
+            <button class="btn-sm-follow">Following</button>
+          </li>
+          {% endfor %}
+        {% else %}
+        <p class="empty-state">You're not following anyone yet. Explore recipes to find people to follow.</p>
+        {% endif %}
+      </ul>
+    </section>
+  </div>
+
+  <div class="col-right">
+    <section>
+      <div class="section-title">
+        <h3>Suggested accounts</h3>
+      </div>
+      <ul class="follow-list">
+        <p class="empty-state">No suggestions yet.</p>
+      </ul>
+    </section>
+  </div>
+</div>
+{% endblock %}
