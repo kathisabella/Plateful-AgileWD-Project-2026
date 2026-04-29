@@ -41,6 +41,9 @@
             <p class="handle">{{ username|default('@username') }}</p>
           </div>
         </div>
+          <form action="{{ url_for('logout') }}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Log out</button>
+          </form>
         {% endblock %}
       </aside>
 
