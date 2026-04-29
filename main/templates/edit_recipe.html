@@ -1,148 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-  
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ page_title|default('Plateful Edit Recipe') }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/>
-  </head>
+{% extends 'base.html' %}
 
-  <body class="page-edit-recipe">
-    <div class="wrapper">
+{% block title %}{{ page_title|default('Plateful Edit Recipe') }}{% endblock %}
+{% block body_class %}page-edit-recipe{% endblock %}
 
-      <!-- SIDEBAR -->
-      <aside class="sidebar">
-        <div class="logo">
-          <h1>Plateful</h1>
-          <p>your recipe space</p>
-        </div>
+{% block topbar %}
+<header class="topbar">
+  <div>Edit Recipe</div>
+  <div style="font-size:0.75rem; color:var(--color-muted);">{{ last_updated|default('') }}</div>
+</header>
+{% endblock %}
 
-        <nav>
-          <a href="{{ url_for('dashboard') }}">Home</a>
-          <a href="{{ url_for('explore') }}">Explore</a>
-          <a href="{{ url_for('my_recipes') }}">My Recipes</a>
-          <a href="{{ url_for('saved_recipes') }}">Saved</a>
-          <a href="{{ url_for('following') }}">Following</a>
-          <a href="{{ url_for('meal_planner') }}">Meal Planner</a>
-          <hr class="nav-divider" />
-          <a href="{{ url_for('profile') }}">Profile</a>
-          <a href="{{ url_for('settings') }}">Settings</a>
-        </nav>
+{% block content %}
+<div class="form-card">
+  <form action="{{ url_for('edit_recipe', recipe_id=recipe_id|default(0)) }}" method="post" enctype="multipart/form-data">
+    <h1>Edit recipe</h1>
+    <p class="sub">Update your recipe details here.</p>
 
-        <div class="sidebar-user">
-          <div class="avatar">{{ initials|default('--') }}</div>
-          <div>
-            <p class="name">{{ display_name|default('Your Name') }}</p>
-            <p class="handle">{{ username|default('@username') }}</p>
-          </div>
-        </div>
-      </aside>
-
-      <!-- MAIN -->
-      <main class="main">
-        <header class="topbar">
-          <div>Edit Recipe</div>
-          <div style="font-size:0.75rem; color:var(--color-muted);">{{ last_updated|default('') }}</div>
-        </header>
-
-        <div class="content">
-          <div class="form-card">
-            <form action="{{ url_for('edit_recipe', recipe_id=recipe_id|default(0)) }}" method="post" enctype="multipart/form-data">
-              <h1>Edit recipe</h1>
-              <p class="sub">Update your recipe details here.</p>
-
-              <!-- TITLE -->
-              <div class="form-group">
-                <label>Recipe Title</label>
-                <input type="text" name="title" value="" />
-              </div>
-
-              <!-- CUISINE + DIFFICULTY -->
-              <div class="row">
-                <div class="form-group">
-                  <label>Cuisine</label>
-                  <select name="cuisine">
-                    <option value="">Select</option>
-                    <option>Italian</option>
-                    <option>Indian</option>
-                  </select>
-                </div>
-
-                <div class="form-group">
-                  <label>Difficulty</label>
-                  <select name="difficulty">
-                    <option value="">Select</option>
-                    <option>Easy</option>
-                    <option>Medium</option>
-                    <option>Hard</option>
-                  </select>
-                </div>
-              </div>
-
-              <!-- PREP TIME + SERVINGS -->
-              <div class="row">
-                <div class="form-group">
-                  <label>Prep Time</label>
-                  <input type="text" name="prep_time" value="" />
-                </div>
-
-                <div class="form-group">
-                  <label>Servings</label>
-                  <input type="number" name="servings" value="" />
-                </div>
-              </div>
-
-              <!-- DESCRIPTION -->
-              <div class="form-group">
-                <label>Description</label>
-                <textarea name="description" rows="3"></textarea>
-              </div>
-
-              <!-- INGREDIENTS -->
-              <div class="form-group">
-                <label>Ingredients</label>
-                <div class="list-input">
-                  <div class="item-row">
-                    <input type="text" name="ingredients" value=""/>
-                    <button type="button" class="remove-btn">✕</button>
-                  </div>
-                </div>
-                <div class="add-btn">+ Add ingredients</div>
-              </div>
-
-              <!-- STEPS -->
-              <div class="form-group">
-                <label>Steps</label>
-                <div class="list-input">
-                  <div class="item-row">
-                    <textarea name="steps" rows="2"></textarea>
-                    <button type="button" class="remove-btn">✕</button>
-                  </div>
-                </div>
-                <div class="add-btn">+ Add step</div>
-              </div>
-
-              <!-- IMAGE -->
-              <div class="form-group">
-                <label>Recipe Image</label>
-                <div class="image-preview">🖼️</div>
-                <input type="file" name="image"/>
-              </div>
-
-              <!-- ACTIONS -->
-              <div class="actions">
-                <button type="submit" class="btn save">Save Changes</button>
-                <button type="submit" class="btn delete" formaction="{{ url_for('delete_recipe', recipe_id=recipe_id|default(0)) }}" formmethod="post">Delete Recipe</button>
-              </div>
-
-            </form>
-          </div>
-        </div>
-      </main>
+    <div class="form-group">
+      <label for="title">Recipe Title</label>
+      <input type="text" id="title" name="title" value="{{ recipe.title|default('') }}" />
     </div>
-  </body>
-</html>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="cuisine">Cuisine</label>
+        <input type="text" id="cuisine" name="cuisine" list="cuisine-options" value="{{ recipe.cuisine|default('') }}" placeholder="Type or choose cuisine"/>
+        <datalist id="cuisine-options">
+          <option value="Italian">
+          <option value="Indian">
+          <option value="Thai">
+          <option value="Japanese">
+          <option value="Mexican">
+          <option value="Indonesian">
+          <option value="Chinese">
+          <option value="French">
+          <option value="Mediterranean">
+        </datalist>
+      </div>
+
+      <div class="form-group">
+        <label for="difficulty">Difficulty</label>
+        <select id="difficulty" name="difficulty">
+          <option value="">Select</option>
+          <option {% if recipe.difficulty|default('') == 'Easy' %}selected{% endif %}>Easy</option>
+          <option {% if recipe.difficulty|default('') == 'Medium' %}selected{% endif %}>Medium</option>
+          <option {% if recipe.difficulty|default('') == 'Hard' %}selected{% endif %}>Hard</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="prep_time">Prep Time</label>
+        <input type="text" id="prep_time" name="prep_time" value="{{ recipe.prep_time|default('') }}" />
+      </div>
+      <div class="form-group">
+        <label for="servings">Servings</label>
+        <input type="number" id="servings" name="servings" value="{{ recipe.servings|default('') }}" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="3">{{ recipe.description|default('') }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="ingredient-0">Ingredients</label>
+      <div class="list-input" id="ingredients-list">
+        <div class="item-row">
+          <input type="text" id="ingredient-0" name="ingredients" value=""/>
+          <button type="button" class="remove-btn">✕</button>
+        </div>
+      </div>
+      <div class="add-btn" data-list="ingredients-list" data-name="ingredients" data-tag="input">+ Add ingredient</div>
+    </div>
+
+    <div class="form-group">
+      <label for="step-0">Steps</label>
+      <div class="list-input" id="steps-list">
+        <div class="item-row">
+          <textarea id="step-0" name="steps" rows="2"></textarea>
+          <button type="button" class="remove-btn">✕</button>
+        </div>
+      </div>
+      <div class="add-btn" data-list="steps-list" data-name="steps" data-tag="textarea">+ Add step</div>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Recipe Image</label>
+      <div class="image-preview">🖼️</div>
+      <input type="file" id="image" name="image"/>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn save">Save Changes</button>
+      <button type="submit" class="btn delete" formaction="{{ url_for('delete_recipe', recipe_id=recipe_id|default(0)) }}" formmethod="post">Delete Recipe</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='recipe_form.js') }}"></script>
+{% endblock %}
