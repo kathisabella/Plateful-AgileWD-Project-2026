@@ -39,6 +39,11 @@ def my_recipes():
 def saved_recipes():
     return render_template('saved_recipe.html')
 
+@app.route('/logout', methods=['POST'])
+def logout():
+    session.clear()
+    return redirect(url_for('login_page'))
+
 @app.route('/following', methods=['GET'])
 def following():
     return render_template('following.html')

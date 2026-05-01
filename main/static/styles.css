@@ -1446,3 +1446,8 @@ body.page-profile .columns { display: grid; grid-template-columns: 1fr 260px; ga
 .empty-state { padding: 18px; border: 1px dashed #d8d0b0; border-radius: 12px; color: var(--color-muted); background: #fff; font-size: 0.85rem; }
 .empty-inline { color: var(--color-faint); font-style: italic; }
 .empty-table { color: var(--color-faint); font-size: 0.75rem; }
+
+
+.logout-form { margin-top: 10px; }
+.logout-btn { width: 100%; padding: 8px 12px; background: none; border: 1.5px solid #d8d0b0; border-radius: 8px; font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; color: var(--color-muted); cursor: pointer; text-align: left; transition: background 0.12s, color 0.12s; }
+.logout-btn:hover { background: #fdf0f0; border-color: #e8b0b0; color: #c0392b; }
