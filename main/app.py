@@ -8,6 +8,7 @@ from routes.mealplanner import get_meal_planner_context
 load_dotenv()
 
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  # NOSONAR — loaded from .env, not hardcoded
 
 @app.route('/', methods=['GET'])
