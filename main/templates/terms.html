@@ -1,62 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Plateful Terms of Service</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
-    </head>
+{% block title %}Plateful Terms of Service{% endblock %}
+{% block body_class %}page-settings{% endblock %}
 
-    <body class="page-settings">
-        <div class="wrapper">
+{% block sidebar_nav %}
+<a href="{{ url_for('login_page') }}">Back to Login</a>
+{% endblock %}
 
-            <aside class="sidebar">
-                <div class="logo">
-                    <h1>Plateful</h1>
-                    <p>your recipe space</p>
-                </div>
+{% block sidebar_user %}{% endblock %}
 
-                <nav>
-                    <a href="{{ url_for('login_page') }}">Back to Login</a>
-                </nav>
-            </aside>
+{% block topbar %}
+<header class="topbar">
+  <div>Terms of Service</div>
+</header>
+{% endblock %}
 
-            <main class="main">
-                <header class="topbar">
-                    <div>Terms of Service</div>
-                </header>
+{% block content %}
+<div class="form-card">
+  <h1>Terms of Service</h1>
+  <p class="sub">Last updated: 2026</p>
 
-                <div class="content">
-                    <div class="form-card">
-                        <h1>Terms of Service</h1>
-                        <p class="sub">Last updated: 2026</p>
+  <div class="section">
+    <h3>1. Using Plateful</h3>
+    <p>You may use Plateful to create, save, and explore recipes for personal and educational use.</p>
+  </div>
 
-                        <div class="section">
-                            <h3>1. Using Plateful</h3>
-                            <p>You may use Plateful to create, save, and explore recipes for personal and educational use.</p>
-                        </div>
+  <div class="section">
+    <h3>2. Your content</h3>
+    <p>You are responsible for the recipes, comments, and profile information you upload.</p>
+  </div>
 
-                        <div class="section">
-                            <h3>2. Your content</h3>
-                            <p>You are responsible for the recipes, comments, and profile information you upload.</p>
-                        </div>
+  <div class="section">
+    <h3>3. Acceptable use</h3>
+    <p>Do not upload harmful, abusive, or misleading content, and do not attempt to interfere with the platform.</p>
+  </div>
 
-                        <div class="section">
-                            <h3>3. Acceptable use</h3>
-                            <p>Do not upload harmful, abusive, or misleading content, and do not attempt to interfere with the platform.</p>
-                        </div>
-
-                        <div class="section">
-                            <h3>4. Changes</h3>
-                            <p>These terms may be updated as the project develops.</p>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </body>
-</html>
+  <div class="section">
+    <h3>4. Changes</h3>
+    <p>These terms may be updated as the project develops.</p>
+  </div>
+</div>
+{% endblock %}

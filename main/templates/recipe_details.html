@@ -1,120 +1,86 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ page_title|default('Plateful Recipe Details') }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
-  </head>
+{% extends 'base.html' %}
 
-  <body class="page-recipe-details">
-    <div class="wrapper">
+{% block title %}{{ page_title|default('Plateful Recipe Details') }}{% endblock %}
+{% block body_class %}page-recipe-details{% endblock %}
 
-      <!-- SIDEBAR -->
-      <aside class="sidebar">
-        <div class="logo">
-          <h1>Plateful</h1>
-          <p>your recipe space</p>
-        </div>
+{% block topbar %}
+<header class="topbar">
+  <div>Recipe Details</div>
+</header>
+{% endblock %}
 
-        <nav>
-          <a href="{{ url_for('dashboard') }}">Home</a>
-          <a href="{{ url_for('explore') }}">Explore</a>
-          <a href="{{ url_for('my_recipes') }}">My Recipes</a>
-          <a href="{{ url_for('saved_recipes') }}">Saved</a>
-          <a href="{{ url_for('following') }}">Following</a>
-          <a href="{{ url_for('meal_planner') }}">Meal Planner</a>
-          <hr class="nav-divider" />
-          <a href="{{ url_for('profile') }}">Profile</a>
-          <a href="{{ url_for('settings') }}">Settings</a>
-        </nav>
+{% block content %}
+<div class="recipe-layout">
 
-        <div class="sidebar-user">
-          <div class="avatar">{{ initials|default('--') }}</div>
-          <div>
-            <p class="name">{{ display_name|default('Your Name') }}</p>
-            <p class="handle">{{ username|default('@username') }}</p>
-          </div>
-        </div>
-      </aside>
-
-      <!-- MAIN -->
-      <main class="main">
-        <header class="topbar">
-          <div>Recipe Details</div>
-        </header>
-
-        <div class="content">
-          <div class="recipe-layout">
-
-            <!-- LEFT COLUMN -->
-            <div>
-              <div class="recipe-header">
-                <h1>Recipe title</h1>
-                <div class="recipe-meta">
-                  Cuisine • Time • Difficulty • by {{ username|default('@username') }}
-                </div>
-              </div>
-
-              <div class="actions">
-                <form action="{{ url_for('save_recipe', recipe_id=recipe_id|default(0)) }}" method="post" style="display:inline;">
-                  <button type="submit" class="btn primary">Save</button>
-                </form>
-                <button type="button" class="btn">Share</button>
-              </div>
-
-              <div class="recipe-image"></div>
-
-              <div class="section">
-                <h3>Description</h3>
-                <div class="desc-card">
-                  <p class="desc-text">Add your recipe description here.</p>
-                  <div class="desc-tags">
-                    <span class="desc-tag">Tag 1</span>
-                    <span class="desc-tag">Tag 2</span>
-                    <span class="desc-tag">Tag 3</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="section">
-                <h3>Ingredients</h3>
-                <div class="ing-card">
-                  <div class="ing-list">
-                    <p class="empty-state">No ingredients added yet.</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="section">
-                <h3>Steps</h3>
-                <div class="steps-card">
-                  <p class="empty-state">No steps added yet.</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- RIGHT COLUMN -->
-            <div>
-              <div class="side-card">
-                <p class="empty-inline">Add supporting recipe details here.</p>
-              </div>
-
-              <div class="side-card">
-                <p class="empty-inline">Add supporting recipe details here.</p>
-              </div>
-
-              <div class="side-card">
-                <p class="empty-inline">Add supporting recipe details here.</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </main>
+  <div>
+    <div class="recipe-header">
+      <h1>{{ recipe.title|default('Recipe title') }}</h1>
+      <div class="recipe-meta">
+        {{ recipe.cuisine|default('Cuisine') }} · {{ recipe.prep_time|default('Time') }} · {{ recipe.difficulty|default('Difficulty') }} · by {{ recipe.author|default(username|default('@username')) }}
+      </div>
     </div>
-  </body>
-</html>
+
+    <div class="actions">
+      <form action="{{ url_for('save_recipe', recipe_id=recipe_id|default(0)) }}" method="post" style="display:inline;">
+        <button type="submit" class="btn primary">Save</button>
+      </form>
+      <button type="button" class="btn">Share</button>
+    </div>
+
+    <div class="recipe-image"></div>
+
+    <div class="section">
+      <h3>Description</h3>
+      <div class="desc-card">
+        <p class="desc-text">{{ recipe.description|default('') }}</p>
+        <div class="desc-tags">
+          {% for tag in recipe.tags|default([]) %}
+          <span class="desc-tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Ingredients</h3>
+      <div class="ing-card">
+        <div class="ing-list">
+          {% if recipe.ingredients|default([]) %}
+            {% for ingredient in recipe.ingredients %}
+            <p>{{ ingredient }}</p>
+            {% endfor %}
+          {% else %}
+          <p class="empty-state">No ingredients added yet.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Steps</h3>
+      <div class="steps-card">
+        {% if recipe.steps|default([]) %}
+          {% for step in recipe.steps %}
+          <p>{{ loop.index }}. {{ step }}</p>
+          {% endfor %}
+        {% else %}
+        <p class="empty-state">No steps added yet.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="side-card">
+      <p class="empty-inline">Add supporting recipe details here.</p>
+    </div>
+    <div class="side-card">
+      <p class="empty-inline">Add supporting recipe details here.</p>
+    </div>
+    <div class="side-card">
+      <p class="empty-inline">Add supporting recipe details here.</p>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

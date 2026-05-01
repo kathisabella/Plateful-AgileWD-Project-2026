@@ -1,61 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Plateful Privacy Policy</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:wght@400;500;600;700&display=swap" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
-    </head>
+{% block title %}Plateful Privacy Policy{% endblock %}
+{% block body_class %}page-settings{% endblock %}
 
-    <body class="page-settings">
-        <div class="wrapper">
+{% block sidebar_nav %}
+<a href="{{ url_for('login_page') }}">Back to Login</a>
+{% endblock %}
 
-            <aside class="sidebar">
-                <div class="logo">
-                    <h1>Plateful</h1>
-                    <p>your recipe space</p>
-                </div>
-                <nav>
-                    <a href="{{ url_for('login_page') }}">Back to Login</a>
-                </nav>
-            </aside>
+{% block sidebar_user %}{% endblock %}
 
-            <main class="main">
-                <header class="topbar">
-                    <div>Privacy Policy</div>
-                </header>
+{% block topbar %}
+<header class="topbar">
+  <div>Privacy Policy</div>
+</header>
+{% endblock %}
 
-                <div class="content">
-                    <div class="form-card">
-                        <h1>Privacy Policy</h1>
-                        <p class="sub">Last updated: 2026</p>
+{% block content %}
+<div class="form-card">
+  <h1>Privacy Policy</h1>
+  <p class="sub">Last updated: 2026</p>
 
-                        <div class="section">
-                            <h3>1. Information collected</h3>
-                            <p>Plateful may collect account details such as your name, username, email, and recipe submissions.</p>
-                        </div>
+  <div class="section">
+    <h3>1. Information collected</h3>
+    <p>Plateful may collect account details such as your name, username, email, and recipe submissions.</p>
+  </div>
 
-                        <div class="section">
-                            <h3>2. How information is used</h3>
-                            <p>Your information is used to support account access, recipe sharing, and core app functionality.</p>
-                        </div>
+  <div class="section">
+    <h3>2. How information is used</h3>
+    <p>Your information is used to support account access, recipe sharing, and core app functionality.</p>
+  </div>
 
-                        <div class="section">
-                            <h3>3. Data sharing</h3>
-                            <p>Your data is not sold. Public recipe content may be visible to other users of the platform.</p>
-                        </div>
+  <div class="section">
+    <h3>3. Data sharing</h3>
+    <p>Your data is not sold. Public recipe content may be visible to other users of the platform.</p>
+  </div>
 
-                        <div class="section">
-                            <h3>4. Contact</h3>
-                            <p>For project purposes, this policy can be updated as the application develops.</p>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </body>
-</html>
+  <div class="section">
+    <h3>4. Contact</h3>
+    <p>For project purposes, this policy can be updated as the application develops.</p>
+  </div>
+</div>
+{% endblock %}

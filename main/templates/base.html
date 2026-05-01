@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Plateful{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Figtree:wght@400;500;600;700&display=swap"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/>
+  </head>
+
+  <body class="{% block body_class %}{% endblock %}">
+    <div class="wrapper">
+
+      <aside class="sidebar">
+        <a href="{{ url_for('dashboard') }}" class="logo">
+          <h1>Plateful</h1>
+          <p>your recipe space</p>
+        </a>
+
+        <nav>
+          {% block sidebar_nav %}
+          <a href="{{ url_for('dashboard') }}"{% if request.endpoint == 'dashboard' %} class="active"{% endif %}>Home</a>
+          <a href="{{ url_for('explore') }}"{% if request.endpoint == 'explore' %} class="active"{% endif %}>Explore</a>
+          <a href="{{ url_for('my_recipes') }}"{% if request.endpoint == 'my_recipes' %} class="active"{% endif %}>My Recipes</a>
+          <a href="{{ url_for('saved_recipes') }}"{% if request.endpoint == 'saved_recipes' %} class="active"{% endif %}>Saved</a>
+          <a href="{{ url_for('following') }}"{% if request.endpoint == 'following' %} class="active"{% endif %}>Following</a>
+          <a href="{{ url_for('meal_planner') }}"{% if request.endpoint == 'meal_planner' %} class="active"{% endif %}>Meal Planner</a>
+          <hr class="nav-divider" />
+          <a href="{{ url_for('profile') }}"{% if request.endpoint == 'profile' %} class="active"{% endif %}>Profile</a>
+          <a href="{{ url_for('settings') }}"{% if request.endpoint == 'settings' %} class="active"{% endif %}>Settings</a>
+          {% endblock %}
+        </nav>
+
+        {% block sidebar_user %}
+        <div class="sidebar-user">
+          <div class="avatar">{{ initials|default('--') }}</div>
+          <div>
+            <p class="name">{{ display_name|default('Your Name') }}</p>
+            <p class="handle">{{ username|default('@username') }}</p>
+          </div>
+        </div>
+        {% endblock %}
+      </aside>
+
+      <main class="main">
+        {% block topbar %}{% endblock %}
+
+        <div class="content">
+          {% block content %}{% endblock %}
+        </div>
+      </main>
+    </div>
+
+    {% block scripts %}{% endblock %}
+  </body>
+</html>
