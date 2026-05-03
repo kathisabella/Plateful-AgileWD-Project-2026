@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from dotenv import load_dotenv
 import os
+from flask_sqlalchemy import SQLAlchemy
 
 from routes.mealplanner import get_meal_planner_context
 
@@ -9,6 +10,11 @@ load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+# Database configuration
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///plateful.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
 
 @app.route('/')
 def login_page():
