@@ -21,7 +21,7 @@ db.init_app(app)
 
 # ---------- Auth ----------
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def login_page():
     return render_template('login.html')
 
@@ -78,27 +78,26 @@ def settings():
     return render_template('settings.html')
 
 
-# ---------- Meal planner ----------
-
-@app.route('/meal-planner')
+@app.route('/meal-planner', methods=['GET'])
 def meal_planner():
     days = [
         "Monday", "Tuesday", "Wednesday", "Thursday",
         "Friday", "Saturday", "Sunday"
     ]
+
     meal_types = ["Breakfast", "Lunch", "Dinner"]
 
-    saved = session.get("saved_recipes", [])
+    saved_recipes = session.get("saved_recipes", [])
 
     user = {
         "initials": session.get("initials", "--"),
         "display_name": session.get("display_name", "Your Name"),
-        "username": session.get("username", "@username"),
+        "username": session.get("username", "@username")
     }
 
-    context = get_meal_planner_context(days, meal_types, saved, user)
-    return render_template('mealplanner.html', **context)
+    context = get_meal_planner_context(days, meal_types, saved_recipes, user)
 
+    return render_template('mealplanner.html', **context)
 
 # ---------- Recipes ----------
 
@@ -108,7 +107,7 @@ def upload_recipe():
         return redirect(url_for('dashboard'))
     return render_template('upload_recipe.html')
 
-@app.route('/recipe/<int:recipe_id>')
+@app.route('/recipe/<int:recipe_id>', methods=['GET'])
 def recipe_details(recipe_id):
     return render_template('recipe_details.html', recipe_id=recipe_id)
 
@@ -129,11 +128,11 @@ def save_recipe(recipe_id):
 
 # ---------- Static info pages ----------
 
-@app.route('/terms')
+@app.route('/terms', methods=['GET'])
 def terms():
     return render_template('terms.html')
 
-@app.route('/privacy')
+@app.route('/privacy', methods=['GET'])
 def privacy():
     return render_template('privacy.html')
 

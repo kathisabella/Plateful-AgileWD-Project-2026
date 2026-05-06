@@ -1,346 +1,189 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ page_title|default('Plateful Profile') }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Figtree:wght@400;500;600;700&display=swap"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/>
-  </head>
+{% block title %}{{ page_title|default('Plateful Profile') }}{% endblock %}
+{% block body_class %}page-profile{% endblock %}
 
-  <body class="page-profile">
-    <div class="wrapper">
+{% block topbar %}
+<header class="topbar">
+  <div class="topbar-left">
+    <span class="hi">{{ greeting|default('Welcome') }}</span>
+    <span class="date">{{ page_date|default('') }}</span>
+  </div>
+  <div class="topbar-right">
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" placeholder="" />
+    </div>
+    <button class="notif-btn">🔔 <span class="notif-badge">0</span></button>
+    <a href="{{ url_for('upload_recipe') }}" class="btn-upload">+ New Recipe</a>
+  </div>
+</header>
+{% endblock %}
 
-      <!-- SIDEBAR -->
-      <aside class="sidebar">
-        <div class="logo">
-          <h1>Plateful</h1>
-          <p>your recipe space</p>
-        </div>
+{% block content %}
+<div class="profile-header">
+  <div class="profile-top">
+    <div class="avatar-lg">{{ initials|default('--') }}</div>
 
-        <nav>
-          <a href="{{ url_for('dashboard') }}">Home</a>
-          <a href="{{ url_for('explore') }}">Explore</a>
-          <a href="{{ url_for('my_recipes') }}">My Recipes</a>
-          <a href="{{ url_for('saved_recipes') }}">Saved</a>
-          <a href="{{ url_for('following') }}">Following</a>
-          <a href="{{ url_for('meal_planner') }}">Meal Planner</a>
-          <hr class="nav-divider" />
-          <a href="{{ url_for('profile') }}" class="active">Profile</a>
-          <a href="{{ url_for('settings') }}">Settings</a>
-        </nav>
+    <div class="profile-identity">
+      <h2>{{ display_name|default('Your Name') }}</h2>
+      <p class="handle">{{ username|default('@username') }} · {{ joined_date|default('') }}</p>
+      <p class="bio">{{ bio|default('') }}</p>
 
-        <div class="sidebar-user">
-          <div class="avatar">{{ initials|default('--') }}</div>
-          <div>
-            <p class="name">{{ display_name|default('Your Name') }}</p>
-            <p class="handle">{{ username|default('@username') }}</p>
-          </div>
-        </div>
-      </aside>
-
-      <!-- MAIN -->
-      <main class="main">
-
-        <!-- TOPBAR -->
-        <header class="topbar">
-          <div class="topbar-left">
-            <span class="hi">{{ greeting|default('Welcome') }}</span>
-            <span class="date">{{ page_date|default('') }}</span>
-          </div>
-
-          <div class="topbar-right">
-            <div class="search-wrap">
-              <span class="search-icon">🔍</span>
-              <input type="text" placeholder="" />
-            </div>
-
-            <button class="notif-btn"> 🔔 <span class="notif-badge">0</span> </button>
-            <a href="{{ url_for('upload_recipe') }}" class="btn-upload">+ New Recipe</a>
-
-          </div>
-        </header>
-
-        <!-- CONTENT -->
-        <div class="content">
-
-          <!-- PROFILE HEADER -->
-          <div class="profile-header">
-            <div class="profile-top">
-              <div class="avatar-lg">JL</div>
-
-              <div class="profile-identity">
-                <h2>Profile Name</h2>
-                <p class="handle">{{ username|default('@username') }} · joined date</p>
-                <p class="bio">Add a short profile bio here.</p>
-
-                <div class="profile-tags">
-                  <span class="tag">Tag 1</span>
-                  <span class="tag">Tag 2</span>
-                </div>
-              </div>
-
-              <div class="profile-actions">
-                <a href="{{ url_for('settings') }}" class="btn-edit">Edit Profile</a>
-                <button class="btn-follow">+ Follow</button>
-              </div>
-            </div>
-
-            <div class="profile-stats">
-              <div class="ps-item">
-                <p class="ps-value">0</p>
-                <p class="ps-label">Recipes</p>
-              </div>
-
-              <div class="ps-item">
-                <p class="ps-value">0</p>
-                <p class="ps-label">Total saves</p>
-              </div>
-
-              <div class="ps-item">
-                <p class="ps-value">0</p>
-                <p class="ps-label">Saved</p>
-              </div>
-
-              <div class="ps-item">
-                <p class="ps-value">0</p>
-                <p class="ps-label">Following</p>
-              </div>
-
-              <div class="ps-item">
-                <p class="ps-value">0</p>
-                <p class="ps-label">Followers</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- PROFILE NAV TABS -->
-          <div class="profile-nav">
-            <button class="pnav-btn active" onclick="switchProfileTab('recipes', this)">Recipes</button>
-            <button class="pnav-btn" onclick="switchProfileTab('saved', this)">Saved</button>
-            <button class="pnav-btn" onclick="switchProfileTab('activity', this)">Activity</button>
-            <button class="pnav-btn" onclick="switchProfileTab('followers', this)">Followers</button>
-          </div>
-
-          <!-- TAB: RECIPES -->
-          <div class="tab-panel active" id="tab-recipes">
-            <div class="section-title">
-              <h3>My recipes</h3>
-              <a href="{{ url_for('upload_recipe') }}">+ New Recipe</a>
-            </div>
-
-            <div class="recipe-grid">
-              <p class="empty-state">No recipes posted yet.</p>
-            </div>
-          </div>
-
-          <!-- TAB: SAVED -->
-          <div class="tab-panel" id="tab-saved">
-            <div class="section-title">
-              <h3>Saved recipes</h3>
-              <span style="font-size:0.78rem; color:var(--color-muted);">61 recipes in 4 collections</span>
-            </div>
-
-            <!-- collection pills -->
-            <p class="empty-state">No saved recipes yet.</p>
-          </div>
-
-          <!-- TAB: ACTIVITY -->
-          <div class="tab-panel" id="tab-activity">
-            <div class="columns">
-              <div class="col-left">
-                <section>
-                  <div class="section-title">
-                    <h3>Recent activity</h3>
-                  </div>
-
-                  <div class="feed">
-                    <div class="feed-item">
-                      <span class="feed-text">
-                        <strong>@community_member</strong> saved your Roasted Vegetable Bake
-                      </span>
-                      <span class="feed-time">2 hours ago</span>
-                    </div>
-
-                    <div class="feed-item">
-                      <span class="feed-text">
-                        <strong>@cookjournal</strong> left a comment on One-Pan Baked Eggs:
-                        "Made this twice already, the spice level is perfect"
-                      </span>
-                      <span class="feed-time">5 hours ago</span>
-                    </div>
-
-                    <div class="feed-item">
-                      <span class="feed-text">
-                        <strong>@bakersoph</strong> started following you
-                      </span>
-                      <span class="feed-time">Yesterday</span>
-                    </div>
-
-                    <div class="feed-item">
-                      <span class="feed-text">
-                        <strong>@recipewriter</strong> gave Roasted Vegetable Bake ⭐ 5
-                      </span>
-                      <span class="feed-time">2 days ago</span>
-                    </div>
-
-                    <div class="feed-item">
-                      <span class="feed-text">
-                        You posted <strong>Herb Flatbread</strong>
-                      </span>
-                      <span class="feed-time">3 days ago</span>
-                    </div>
-
-                    <div class="feed-item">
-                      <span class="feed-text">
-                        <strong>@sharedtable</strong> saved your One-Pan Baked Eggs
-                      </span>
-                      <span class="feed-time">4 days ago</span>
-                    </div>
-
-                    <div class="feed-item">
-                      <span class="feed-text">
-                        You saved <strong>Lemon Yogurt Cake</strong> by @bakehouse
-                      </span>
-                      <span class="feed-time">5 days ago</span>
-                    </div>
-
-                  </div>
-                </section>
-              </div>
-
-              <div class="col-right">
-                <div class="pin-card">
-                  <p class="pin-label">📌 Note to self</p>
-                  <p>"Try the harira with preserved lemon next time. Also — test the croissant dough overnight."</p>
-                </div>
-              </div>
-            </div>
-
-            <p class="empty-state">No activity yet.</p>
-          </div>
-
-          <!-- TAB: FOLLOWERS -->
-          <div class="tab-panel" id="tab-followers">
-            <div class="columns">
-              <div class="col-left">
-                <section>
-
-                  <div class="section-title">
-                    <h3>
-                      Followers
-                      <span style="font-size:0.8rem; color:var(--color-muted); font-family:var(--font-ui); font-weight:400;">134</span>
-                    </h3>
-                  </div>
-
-                  <ul class="follow-list">
-                    <li class="follow-item">
-                      <div class="avatar">{{ initials|default('--') }}</div>
-                      <div class="info">
-                        <p class="uname">@recipewriter</p>
-                        <p class="sub">Posted 1 hr ago</p>
-                      </div>
-                      <button class="btn-sm-follow">Following</button>
-                    </li>
-
-                    <li class="follow-item">
-                      <div class="avatar">{{ initials|default('--') }}</div>
-                      <div class="info">
-                        <p class="uname">@homekitchen</p>
-                        <p class="sub">3 recipes this week</p>
-                      </div>
-                      <button class="btn-sm-follow">Following</button>
-                    </li>
-
-                    <li class="follow-item">
-                      <div class="avatar" style="background:#8a6e52;">{{ initials|default('--') }}</div>
-                      <div class="info">
-                        <p class="uname">@cookjournal</p>
-                        <p class="sub">Posted 2 days ago</p>
-                      </div>
-                      <button class="btn-sm-follow">Following</button>
-                    </li>
-
-                    <li class="follow-item">
-                      <div class="avatar" style="background:#7a6e8a;">{{ initials|default('--') }}</div>
-                      <div class="info">
-                        <p class="uname">@bakersoph</p>
-                        <p class="sub">New follower</p>
-                      </div>
-                      <button class="btn-sm-follow" style="background:var(--color-text); color:var(--color-surface); border-color:var(--color-text);">Follow back</button>
-                    </li>
-
-                    <li class="follow-item">
-                      <div class="avatar" style="background:#6a8a7a;">{{ initials|default('--') }}</div>
-                      <div class="info">
-                        <p class="uname">@community_member</p>
-                        <p class="sub">Saved 3 of your recipes</p>
-                      </div>
-                      <button class="btn-sm-follow" style="background:var(--color-text); color:var(--color-surface); border-color:var(--color-text);">Follow back</button>
-                    </li>
-                  </ul>
-                </section>
-              </div>
-
-              <div class="col-right">
-                <section>
-
-                  <div class="section-title">
-                    <h3>
-                      Following
-                      <span style="font-size:0.8rem; color:var(--color-muted); font-family:var(--font-ui); font-weight:400;">
-                        27
-                      </span>
-                    </h3>
-                  </div>
-
-                  <ul class="follow-list">
-                    <li class="follow-item">
-                      <div class="avatar">{{ initials|default('--') }}</div>
-                      <div class="info">
-                        <p class="uname">@recipewriter</p>
-                        <p class="sub">1 new recipe</p>
-                      </div>
-                    </li>
-
-                    <li class="follow-item">
-                      <div class="avatar">{{ initials|default('--') }}</div>
-                      <div class="info">
-                        <p class="uname">@homekitchen</p>
-                        <p class="sub">3 this week</p>
-                      </div>
-                    </li>
-
-                    <li class="follow-item">
-                      <div class="avatar" style="background:#8a6e52;">{{ initials|default('--') }} 
-                      </div>
-                      <div class="info">
-                        <p class="uname">@bakehouse</p>
-                        <p class="sub">Posted 3 days ago</p>
-                      </div>
-                    </li>
-                  </ul>
-                </section>
-              </div>
-            </div>
-
-            <p class="empty-state">No followers to show yet.</p>
-          </div>
-        </div>
-      </main>
+      <div class="profile-tags">
+        {% for tag in tags|default([]) %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
     </div>
 
-    <script>
-      function switchProfileTab(name, btn) {
-        document.querySelectorAll('.pnav-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('tab-' + name).classList.add('active');
-      }
-    </script>
+    <div class="profile-actions">
+      <a href="{{ url_for('settings') }}" class="btn-edit">Edit Profile</a>
+      <button class="btn-follow">+ Follow</button>
+    </div>
+  </div>
 
-  </body>
-</html>
+  <div class="profile-stats">
+    <div class="ps-item">
+      <p class="ps-value">{{ recipe_count|default(0) }}</p>
+      <p class="ps-label">Recipes</p>
+    </div>
+    <div class="ps-item">
+      <p class="ps-value">{{ total_saves|default(0) }}</p>
+      <p class="ps-label">Total saves</p>
+    </div>
+    <div class="ps-item">
+      <p class="ps-value">{{ saved_count|default(0) }}</p>
+      <p class="ps-label">Saved</p>
+    </div>
+    <div class="ps-item">
+      <p class="ps-value">{{ following_count|default(0) }}</p>
+      <p class="ps-label">Following</p>
+    </div>
+    <div class="ps-item">
+      <p class="ps-value">{{ followers_count|default(0) }}</p>
+      <p class="ps-label">Followers</p>
+    </div>
+  </div>
+</div>
+
+<div class="profile-nav">
+  <button class="pnav-btn active" data-tab="recipes">Recipes</button>
+  <button class="pnav-btn" data-tab="saved">Saved</button>
+  <button class="pnav-btn" data-tab="activity">Activity</button>
+  <button class="pnav-btn" data-tab="followers">Followers</button>
+</div>
+
+<!-- TAB: RECIPES -->
+<div class="tab-panel active" id="tab-recipes">
+  <div class="section-title">
+    <h3>My recipes</h3>
+    <a href="{{ url_for('upload_recipe') }}">+ New Recipe</a>
+  </div>
+  <div class="recipe-grid">
+    <p class="empty-state">No recipes posted yet.</p>
+  </div>
+</div>
+
+<!-- TAB: SAVED -->
+<div class="tab-panel" id="tab-saved">
+  <div class="section-title">
+    <h3>Saved recipes</h3>
+    <span style="font-size:0.78rem; color:var(--color-muted);">{{ saved_count|default(0) }} recipe{{ 's' if saved_count != 1 else '' }}</span>
+  </div>
+  <p class="empty-state">No saved recipes yet.</p>
+</div>
+
+<!-- TAB: ACTIVITY -->
+<div class="tab-panel" id="tab-activity">
+  <div class="columns">
+    <div class="col-left">
+      <section>
+        <div class="section-title">
+          <h3>Recent activity</h3>
+        </div>
+        <div class="feed">
+          {% for item in activity|default([]) %}
+          <div class="feed-item">
+            <span class="feed-text">{{ item.text|safe }}</span>
+            <span class="feed-time">{{ item.time }}</span>
+          </div>
+          {% else %}
+          <p class="empty-state">No recent activity yet.</p>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+
+    <div class="col-right">
+      {% if pin_note %}
+      <div class="pin-card">
+        <p class="pin-label">📌 Note to self</p>
+        <p>{{ pin_note }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- TAB: FOLLOWERS -->
+<div class="tab-panel" id="tab-followers">
+  <div class="columns">
+    <div class="col-left">
+      <section>
+        <div class="section-title">
+          <h3>
+            Followers
+            <span style="font-size:0.8rem; color:var(--color-muted); font-family:var(--font-ui); font-weight:400;">{{ followers_count|default(0) }}</span>
+          </h3>
+        </div>
+
+        <ul class="follow-list">
+          {% for f in followers|default([]) %}
+          <li class="follow-item">
+            <div class="avatar">{{ f.initials|default('--') }}</div>
+            <div class="info">
+              <p class="uname">{{ f.username }}</p>
+              <p class="sub">{{ f.subtitle|default('') }}</p>
+            </div>
+            <button class="btn-sm-follow">{{ 'Following' if f.is_following else 'Follow back' }}</button>
+          </li>
+          {% else %}
+          <p class="empty-state">No followers yet.</p>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
+
+    <div class="col-right">
+      <section>
+        <div class="section-title">
+          <h3>
+            Following
+            <span style="font-size:0.8rem; color:var(--color-muted); font-family:var(--font-ui); font-weight:400;">{{ following_count|default(0) }}</span>
+          </h3>
+        </div>
+
+        <ul class="follow-list">
+          {% for f in following_users|default([]) %}
+          <li class="follow-item">
+            <div class="avatar">{{ f.initials|default('--') }}</div>
+            <div class="info">
+              <p class="uname">{{ f.username }}</p>
+              <p class="sub">{{ f.subtitle|default('') }}</p>
+            </div>
+          </li>
+          {% else %}
+          <p class="empty-state">Not following anyone yet.</p>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
+  </div>
+  <p class="empty-state">No followers to show yet.</p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='profile.js') }}"></script>
+{% endblock %}

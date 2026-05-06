@@ -1,173 +1,128 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base_auth.html' %}
 
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ page_title|default('Plateful Welcome') }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Figtree:wght@400;500;600;700&display=swap"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/>
-  </head>
+{% block title %}{{ page_title|default('Plateful Welcome') }}{% endblock %}
 
-  <body class="page-login">
-    <div class="split">
+{% block panel_left %}
+<div class="panel-logo">
+  <h1>Plateful</h1>
+  <p>your recipe space</p>
+</div>
 
-      <!-- LEFT PANEL -->
-      <div class="panel-left">
-        <div class="panel-logo">
-          <h1>Plateful</h1>
-          <p>your recipe space</p>
-        </div>
+<div class="panel-hero">
+  <p class="tagline">{{ greeting|default('Welcome') }}.</p>
+  <p>Use this screen for sign in and account creation.</p>
+</div>
 
-        <div class="panel-hero">
-          <p class="tagline">{{ greeting|default('Welcome') }}.</p>
-          <p>Use this screen for sign in and account creation.</p>
-        </div>
+<div class="panel-recipes">
+  {% if highlights %}
+  {% for h in highlights %}
+  <p class="empty-state">{{ h }}</p>
+  {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}
 
-        <div class="panel-recipes">
-          <p class="empty-state">Feature highlights can go here.</p>
-        </div>
-      </div>
+{% block panel_right %}
+<div class="form-box">
 
-      <!-- RIGHT PANEL -->
-      <div class="panel-right">
-        <div class="form-box">
+  <div class="tabs">
+    <button type="button" class="tab-btn active" data-tab="login">Sign in</button>
+    <button type="button" class="tab-btn" data-tab="signup">Create account</button>
+  </div>
 
-          <!-- Tabs -->
-          <div class="tabs">
-            <button type="button" class="tab-btn active" onclick="switchTab('login', this)">Sign in</button>
-            <button type="button" class="tab-btn" onclick="switchTab('signup', this)">Create account</button>
-          </div>
+  <!-- LOGIN -->
+  <form action="{{ url_for('login') }}" method="post" id="panel-login" class="form-panel active">
+    <div class="form-heading">
+      <h2>{{ greeting|default('Welcome') }} back</h2>
+      <p>Sign in to your account</p>
+    </div>
 
-          <!-- LOGIN -->
-          <form action="{{ url_for('login') }}" method="post" id="panel-login" class="form-panel active">
-            <div class="form-heading">
-              <h2>{{ greeting|default('Welcome') }} back</h2>
-              <p>Sign in to your account</p>
-            </div>
+    <div class="field">
+      <label for="login-email">Email</label>
+      <input id="login-email" name="email" type="email" placeholder=""/>
+    </div>
 
-            <div class="field">
-              <label for="login-email">Email</label>
-              <input id="login-email" name="email" type="email" placeholder=""/>
-            </div>
-
-            <div class="field">
-              <label for="login-pass">Password</label>
-
-              <div class="password-wrap">
-                <input id="login-pass" name="password" type="password" placeholder=""/>
-                <button type="button" class="show-pass" onclick="togglePass('login-pass', this)">show</button>
-              </div>
-            </div>
-
-            <div style="text-align:right; margin-top:-8px; margin-bottom:18px;">
-              <a href="{{ url_for('forgot_password') }}" style="font-size:0.78rem; color:var(--color-muted); font-weight:500;">Forgot password?</a>
-            </div>
-
-            <button type="submit" class="btn-submit">Sign in</button>
-            <div class="divider">or</div>
-
-            <button type="button" class="btn-social">Continue with Google</button>
-
-            <div class="form-footer">
-              No account?
-              <a href="#" onclick="switchTabByName('signup')">Create one free →</a>
-            </div>
-          </form>
-
-          <!-- SIGN UP -->
-          <form action="{{ url_for('signup') }}" method="post" id="panel-signup" class="form-panel">
-
-            <div class="form-heading">
-              <h2>Join Plateful</h2>
-              <p>Create a new account</p>
-            </div>
-
-            <div class="field-row">
-              <div class="field">
-                <label for="su-first">First name</label>
-                <input id="su-first" name="first_name" type="text" placeholder=""/>
-              </div>
-
-              <div class="field">
-                <label for="su-last">Last name</label>
-                <input id="su-last" name="last_name" type="text" placeholder=""/>
-              </div>
-            </div>
-
-            <div class="field">
-              <label for="su-username">Username</label>
-              <input id="su-username" name="username" type="text" placeholder=""/>
-              <p class="field-hint">This is how others will find you on Plateful</p>
-            </div>
-
-            <div class="field">
-              <label for="su-email">Email</label>
-              <input id="su-email" name="email" type="email" placeholder=""/>
-            </div>
-
-            <div class="field">
-              <label for="su-pass">Password</label>
-
-              <div class="password-wrap">
-                <input id="su-pass" name="password" type="password" placeholder=""/>
-
-                <button type="button" class="show-pass" onclick="togglePass('su-pass', this)">show</button>
-              </div>
-            </div>
-
-            <div class="checkbox-field">
-              <input id="su-terms" name="accept_terms" type="checkbox"/>
-              <label for="su-terms">
-                I agree to the
-                <a href="{{ url_for('terms') }}">Terms of Service</a>
-                and
-                <a href="{{ url_for('privacy') }}">Privacy Policy</a>
-              </label>
-            </div>
-
-            <button type="submit" class="btn-submit">Create account</button>
-            <div class="divider">or</div>
-            <button type="button" class="btn-social">Sign up with Google</button>
-
-            <div class="form-footer">
-              Already have an account?
-              <a href="#" onclick="switchTabByName('login')">
-                Sign in →
-              </a>
-            </div>
-          </form>
-        </div>
+    <div class="field">
+      <label for="login-pass">Password</label>
+      <div class="password-wrap">
+        <input id="login-pass" name="password" type="password" placeholder=""/>
+        <button type="button" class="show-pass">show</button>
       </div>
     </div>
 
-    <script>
-      function switchTab(name, btn) {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('panel-' + name).classList.add('active');
-      }
+    <div style="text-align:right; margin-top:-8px; margin-bottom:18px;">
+      <a href="{{ url_for('forgot_password') }}" style="font-size:0.78rem; color:var(--color-muted); font-weight:500;">Forgot password?</a>
+    </div>
 
-      function switchTabByName(name) {
-        const idx = name === 'login' ? 0 : 1;
-        switchTab(name, document.querySelectorAll('.tab-btn')[idx]);
-      }
+    <button type="submit" class="btn-submit">Sign in</button>
+    <div class="divider">or</div>
+    <button type="button" class="btn-social">Continue with Google</button>
 
-      function togglePass(id, btn) {
-        const input = document.getElementById(id);
+    <div class="form-footer">
+      No account?
+      <a href="#" data-switch-tab="signup">Create one free →</a>
+    </div>
+  </form>
 
-        if (input.type === 'password') {
-          input.type = 'text';
-          btn.textContent = 'hide';
-        } else {
-          input.type = 'password';
-          btn.textContent = 'show';
-        }
-      }
-    </script>
+  <!-- SIGN UP -->
+  <form action="{{ url_for('signup') }}" method="post" id="panel-signup" class="form-panel">
+    <div class="form-heading">
+      <h2>Join Plateful</h2>
+      <p>Create a new account</p>
+    </div>
 
-  </body>
-</html>
+    <div class="field-row">
+      <div class="field">
+        <label for="su-first">First name</label>
+        <input id="su-first" name="first_name" type="text" placeholder=""/>
+      </div>
+      <div class="field">
+        <label for="su-last">Last name</label>
+        <input id="su-last" name="last_name" type="text" placeholder=""/>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="su-username">Username</label>
+      <input id="su-username" name="username" type="text" placeholder=""/>
+      <p class="field-hint">This is how others will find you on Plateful</p>
+    </div>
+
+    <div class="field">
+      <label for="su-email">Email</label>
+      <input id="su-email" name="email" type="email" placeholder=""/>
+    </div>
+
+    <div class="field">
+      <label for="su-pass">Password</label>
+      <div class="password-wrap">
+        <input id="su-pass" name="password" type="password" placeholder=""/>
+        <button type="button" class="show-pass">show</button>
+      </div>
+    </div>
+
+    <div class="checkbox-field">
+      <input id="su-terms" name="accept_terms" type="checkbox"/>
+      <label for="su-terms">
+        I agree to the
+        <a href="{{ url_for('terms') }}">Terms of Service</a>
+        and
+        <a href="{{ url_for('privacy') }}">Privacy Policy</a>
+      </label>
+    </div>
+
+    <button type="submit" class="btn-submit">Create account</button>
+    <div class="divider">or</div>
+    <button type="button" class="btn-social">Sign up with Google</button>
+
+    <div class="form-footer">
+      Already have an account?
+      <a href="#" data-switch-tab="login">Sign in →</a>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='login.js') }}"></script>
+{% endblock %}

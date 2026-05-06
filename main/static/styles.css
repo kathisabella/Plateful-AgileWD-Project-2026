@@ -1063,6 +1063,7 @@ thead th:first-child { width: 98px; background: #f6f3e5; }
 .tip strong { display: block; font-size: 0.8rem; margin-bottom: 3px; }
 .tip span { font-size: 0.75rem; color: var(--color-muted); line-height: 1.4; }
 
+.legend { margin-top: 20px; padding: 12px 18px 18px; }
 .legend { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 18px 18px; }
 .legend span { font-size: 0.72rem; color: var(--color-muted); padding: 4px 10px; border-radius: 999px; border: 1px solid #ddd4b8; background: #fff; }
 
@@ -1445,3 +1446,8 @@ body.page-profile .columns { display: grid; grid-template-columns: 1fr 260px; ga
 .empty-state { padding: 18px; border: 1px dashed #d8d0b0; border-radius: 12px; color: var(--color-muted); background: #fff; font-size: 0.85rem; }
 .empty-inline { color: var(--color-faint); font-style: italic; }
 .empty-table { color: var(--color-faint); font-size: 0.75rem; }
+
+
+.logout-form { margin-top: 10px; }
+.logout-btn { width: 100%; padding: 8px 12px; background: none; border: 1.5px solid #d8d0b0; border-radius: 8px; font-family: var(--font-body); font-size: 0.82rem; font-weight: 600; color: var(--color-muted); cursor: pointer; text-align: left; transition: background 0.12s, color 0.12s; }
+.logout-btn:hover { background: #fdf0f0; border-color: #e8b0b0; color: #c0392b; }
